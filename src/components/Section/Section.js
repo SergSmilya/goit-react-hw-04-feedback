@@ -11,10 +11,8 @@ export default function Section({
   return (
     <div>
       <h1>Please leave feedback</h1>
-
       {/* BUTTON */}
       <FeedbackOptions options={data} increment={increment} />
-
       {/* STATISTICS */}
       {Boolean(countPositiveFeedbackPercentage()) ? (
         <Statistics
