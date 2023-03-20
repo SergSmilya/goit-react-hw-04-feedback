@@ -2,16 +2,28 @@ import React, { useState } from 'react';
 import Section from './Section/Section';
 
 export default function App() {
-  const [count, setCount] = useState({ good: 0, neutral: 0, bad: 0 });
+  // const [count, setCount] = useState({ good: 0, neutral: 0, bad: 0 });
+
+  const [countGood, setCountGood] = useState(0);
+  const [countNeutral, setCountNeutral] = useState(0);
+  const [countBad, setCountBad] = useState(0);
+
+  const countTotal = {
+    good: countGood,
+    neutral: countNeutral,
+    bad: countBad,
+  };
 
   function increment(e) {
     const key = e.target.outerText;
-    // нет рендера всех кнопок после клика на кнопку
-    setCount(count => ({ [key]: count[key] + 1 }));
+    // setCount({ [key]: count[key] + 1 });
+    if (key === 'good') setCountGood(s => s + 1);
+    else if (key === 'neutral') setCountNeutral(s => s + 1);
+    else if (key === 'bad') setCountBad(s => s + 1);
   }
 
   function countTotalFeedback() {
-    const arrValues = Object.values(count);
+    const arrValues = Object.values(countTotal);
 
     return arrValues.reduce((acc, value) => value + acc, 0);
   }
@@ -19,7 +31,7 @@ export default function App() {
   function countPositiveFeedbackPercentage() {
     const totalFeedback = countTotalFeedback();
 
-    return Math.round((count.good / totalFeedback) * 100);
+    return Math.round((countTotal.good / totalFeedback) * 100);
   }
 
   return (
@@ -34,7 +46,7 @@ export default function App() {
       }}
     >
       <Section
-        data={count}
+        data={countTotal}
         increment={increment}
         countTotalFeedback={countTotalFeedback}
         countPositiveFeedbackPercentage={countPositiveFeedbackPercentage}
@@ -44,11 +56,11 @@ export default function App() {
 }
 
 // export default class App extends Component {
-//   state = {
-//     good: 0,
-//     neutral: 0,
-//     bad: 0,
-//   };
+// state = {
+//   good: 0,
+//   neutral: 0,
+//   bad: 0,
+// };
 
 //   increment = e => {
 //     const key = e.target.outerText;
